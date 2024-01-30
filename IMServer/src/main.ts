@@ -126,7 +126,7 @@ async function main() {
   })
   await client.$connect();
   console.log("Connected to database.");
-  await app.listen({ port: 3001 });
+  await app.listen({ host: "0.0.0.0", port: 3001 });
 }
 
 main()

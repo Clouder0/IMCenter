@@ -52,7 +52,7 @@ export async function getMessages(
               id: pageParam,
             }
           : undefined,
-      skip: 1,
+      skip: pageParam !== "" ? 1 : 0,
       take: 20,
       orderBy: [
         {
