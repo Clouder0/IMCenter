@@ -1,9 +1,3 @@
-"use client";
-
-import dotenv from "dotenv"
-
-dotenv.config()
-
 const base = process.env.BASE??"http://127.0.0.1:3001";
 
 type Source = "qq" | "wechat" | "lark" | undefined;

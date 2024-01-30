@@ -20,9 +20,6 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
-  dotenv:
-    specifier: ^16.4.1
-    version: 16.4.1
   framer-motion:
     specifier: ^11.0.3
     version: 11.0.3(react-dom@18.2.0)(react@18.2.0)
@@ -3493,11 +3490,6 @@ packages:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
-    dev: false
-
-  /dotenv@16.4.1:
-    resolution: {integrity: sha512-CjA3y+Dr3FyFDOAMnxZEGtnW9KBR2M0JvvUtXNW+dYJL5ROWxP9DUHCwgFqpMk0OXCc0ljhaNTr2w/kutYIcHQ==}
-    engines: {node: '>=12'}
     dev: false
 
   /eastasianwidth@0.2.0:
