@@ -79,6 +79,12 @@ app.post("/messages", async function handler(req: any, res) {
   return await client.message.findMany(req.body);
 });
 
+app.post("/addmessage", async function handler(req: any, res) {
+  return await client.message.create({
+    data: req.body
+  });
+})
+
 app.post("/qqmessage",async function handler(req, res) {
   const r = req as unknown as QQMessage;
   if (!r.body.peer) return {};
