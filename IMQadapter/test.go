@@ -53,8 +53,7 @@ func uploadImage(path string) (string, error) {
 		return "", err
 	}
 	fmt.Println(res.Location)
-	fmt.Println(res.Key)
-	return res.Location + res.Key, nil
+	return res.Location, nil
 }
 
 func handleQQMsg(c *gin.Context) {
@@ -117,6 +116,7 @@ func main() {
 	backendUrl = os.Getenv("BACKENDURL")
 	bucketUrl, _ := url.Parse(os.Getenv("BUCKETURL"))
 	filterKeywords = strings.Split(os.Getenv("FILTERKEYWORDS"), "|")
+	fmt.Println(filterKeywords)
 	base := &cos.BaseURL{
 		BucketURL: bucketUrl,
 	}
