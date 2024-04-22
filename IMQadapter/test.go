@@ -18,27 +18,19 @@ import (
 	"github.com/tencentyun/cos-go-sdk-v5"
 )
 
-type Peer struct {
-	Uid      string `json:"uid"`
-	Name     string `json:"name"`
-	ChatType string `json:"chatType"`
-}
-
-type Element struct {
+type Message struct {
 	Type    string `json:"type"`
-	Content string `json:"content"`
-	File    string `json:"file"`
+	Data    map[string]interface{} `json:"data"`
 }
 
 type Sender struct {
-	MemberName string `json:"memberName"`
-	NickName   string `json:"nickName"`
+	Nickname string `json:"nickname"`
 }
 
 type QQMessage struct {
-	Peer     Peer      `json:"peer"`
+	Time     int      `json:"time"`
 	Sender   Sender    `json:"sender"`
-	Elements []Element `json:"elements"`
+	Messages []Message `json:"message"`
 }
 
 var cosClient *cos.Client
