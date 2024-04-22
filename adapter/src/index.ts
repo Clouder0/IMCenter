@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { datetimeRegex, z } from "zod";
+import { z } from "zod";
 
 // declare bun environtment interface
 
@@ -13,13 +13,14 @@ app.get("/", (c) => {
 });
 
 const group_res = z.object({
-  group_id: z.string(),
+  group_id: z.coerce.string(),
   group_name: z.string(),
 });
 
 const get_group_info = async (group_id: string) => {
-  const res = await fetch(`${qq_url}/get_group_info${new URLSearchParams({ group_id }).toString()}`);
-  return group_res.parse(await res.json());
+  const res = await fetch(`${qq_url}/get_group_info?${new URLSearchParams({ group_id }).toString()}`);
+  const res_json = await res.json();
+  return group_res.parse(res_json.data);
 };
 
 const single_msg = z.object({
@@ -33,7 +34,7 @@ const msg_pack = z.object({
     nickname: z.string(),
   }),
   message: z.array(single_msg),
-  group_id: z.string().optional(),
+  group_id: z.coerce.string().optional(),
 });
 
 app.post("/qqmsg", async (c) => {

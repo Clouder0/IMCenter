@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "check": "bunx dprint fmt"
+    "check": "bunx dprint fmt",
+    "postinstall": "bunx patch-package"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",

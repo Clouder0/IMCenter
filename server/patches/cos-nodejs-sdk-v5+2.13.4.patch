@@ -1,0 +1,13 @@
+diff --git a/node_modules/cos-nodejs-sdk-v5/sdk/base.js b/node_modules/cos-nodejs-sdk-v5/sdk/base.js
+index 576382a..0d9b139 100644
+--- a/node_modules/cos-nodejs-sdk-v5/sdk/base.js
++++ b/node_modules/cos-nodejs-sdk-v5/sdk/base.js
+@@ -4224,7 +4224,7 @@ function _submitRequest(params, callback) {
+       sender.on('end', function () {
+         cb(null, {});
+       });
+-    } else if (responseContentLength >= process.binding('buffer').kMaxLength && opt.method !== 'HEAD') {
++    } else if (false) {
+       cb(
+         util.error(
+           new Error(
