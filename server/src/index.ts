@@ -40,7 +40,7 @@ const json_msg = z.object({
 
 const group_notice_json = z.object({
   meta: z.object({
-    announce: z.object({
+    mannounce: z.object({
       title: z.string().base64(),
       text: z.string().base64(),
     }),
@@ -82,21 +82,23 @@ const parse_msg = async (msg: z.infer<typeof single_msg>) => {
   if (img_res.success) {
     try {
       const upload_res = await transload_img(img_res.data.data.file, img_res.data.data.url);
-      if (!upload_res) return `<p> 本处图片加载失败，上传状态码 ${upload_res}. 内容 ${img_res.data}</p>`;
+      if (!upload_res) {
+        return `<p> 本处图片加载失败，上传状态码 ${upload_res}. 内容 ${JSON.stringify(img_res.data)}</p>`;
+      }
       return `<img src="${img_prefix}imc_imgs/${img_res.data.data.file}" />`;
     } catch (e) {
       console.error(e);
-      return `<p> 本处图片加载失败，异常 ${e}. 内容 ${img_res.data}</p>`;
+      return `<p> 本处图片加载失败，异常 ${JSON.stringify(e)}. 内容 ${JSON.stringify(img_res.data)}</p>`;
     }
   }
   const json_res = json_msg.safeParse(msg);
   if (json_res.success) {
-    const notice = group_notice_json.safeParse(json_res.data.data.data);
+    const notice = group_notice_json.safeParse(JSON.parse(json_res.data.data.data));
     if (!notice.success) {
-      return `<p> 本处json解析失败，内容 ${json_res.data}</p>`;
+      return `<p> 本处json解析失败，内容 ${JSON.stringify(json_res.data)}</p>`;
     }
-    const title = base64_decode(notice.data.meta.announce.title);
-    const text = base64_decode(notice.data.meta.announce.text);
+    const title = base64_decode(notice.data.meta.mannounce.title);
+    const text = base64_decode(notice.data.meta.mannounce.text);
     return `<p>群公告：${title}</p><p>${text}</p>`;
   }
 };
