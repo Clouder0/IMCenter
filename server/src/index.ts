@@ -33,6 +33,20 @@ const image_msg = z.object({
   data: z.object({ url: z.string(), file: z.string() }),
 });
 
+const json_msg = z.object({
+  type: z.literal("json"),
+  data: z.object({ data: z.string() }),
+});
+
+const group_notice_json = z.object({
+  meta: z.object({
+    announce: z.object({
+      title: z.string().base64(),
+      text: z.string().base64(),
+    }),
+  }),
+});
+
 const single_msg = z.object({
   type: z.string(),
   data: z.unknown(),
@@ -55,6 +69,10 @@ const transload_img = async (filename: string, url: string) => {
   return res.statusCode;
 };
 
+const base64_decode = (str: string) => {
+  return Buffer.from(str, "base64").toString("utf-8");
+};
+
 const parse_msg = async (msg: z.infer<typeof single_msg>) => {
   const text_res = text_msg.safeParse(msg);
   if (text_res.success) {
@@ -70,6 +88,16 @@ const parse_msg = async (msg: z.infer<typeof single_msg>) => {
       console.error(e);
       return `<p> 本处图片加载失败，异常 ${e}. 内容 ${img_res.data}</p>`;
     }
+  }
+  const json_res = json_msg.safeParse(msg);
+  if (json_res.success) {
+    const notice = group_notice_json.safeParse(json_res.data.data.data);
+    if (!notice.success) {
+      return `<p> 本处json解析失败，内容 ${json_res.data}</p>`;
+    }
+    const title = base64_decode(notice.data.meta.announce.title);
+    const text = base64_decode(notice.data.meta.announce.text);
+    return `<p>群公告：${title}</p><p>${text}</p>`;
   }
 };
 
