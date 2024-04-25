@@ -121,11 +121,6 @@ app.post("/qqmsg", async (c) => {
   return c.json(res);
 });
 
-app.post("/wxmsg", async (c) => {
-  console.log(c.body);
-  return c.text("ok");
-});
-
 export default {
   port: 3212,
   fetch: app.fetch,
